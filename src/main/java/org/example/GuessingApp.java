@@ -2,6 +2,8 @@ package org.example;
 
 import org.example.guessingapp.GameConfig;
 import org.example.guessingapp.HintService;
+import org.example.guessingapp.InvalidInputException;
+import org.example.guessingapp.ValidationService;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 * */
 
 public class GuessingApp {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvalidInputException {
         System.out.println("please enter your name");
         Scanner sc = new Scanner(System.in);
         String name = sc.nextLine();
@@ -37,15 +39,18 @@ public class GuessingApp {
         int targetNumber = gc.getTargetNumber();
 
         System.out.println("please enter valid number between 1 to 100");
+        //int result=0;
+try {
+    int result = sc.nextInt();
+    ValidationService.validateInput(result);
 
-        int result = sc.nextInt();
 
-        int attempt = 0;
-       // boolean loose = false;
+    int attempt = 0;
+    // boolean loose = false;
 
-        int hint = 1;
+    int hint = 1;
 
-            while (targetNumber != result
+    while (targetNumber != result
             && attempt <= gc.getMAX_ATTEMPT()) {
 //                if (targetNumber > result) {
 //                    System.out.println("you guess low");
@@ -56,27 +61,30 @@ public class GuessingApp {
 //                    attempt++;
 //                    loose = true;
 //                }
-                if(hint<=gc.getMAX_HINT()) {
-                  String message =   HintService.getHintCount(targetNumber, hint);
-                    System.out.println("message " + message);
-                }
-                result = sc.nextInt();
-                attempt++;
-                hint ++;
-            }
+        if (hint < gc.getMAX_HINT()) {
+            String message = HintService.getHintCount(targetNumber, hint);
+            System.out.println("message " + message);
+        }
+        System.out.println("you guessing wrong Number , please try agin....!");
+        result = sc.nextInt();
+        ValidationService.validateInput(result);
 
-
-        System.out.println("  attempt " +   attempt++);
-        System.out.println("  hint " +   hint);
-        System.out.println("target Number " + targetNumber);
-if(targetNumber==result){
-    System.out.println("congrats your won");
-}
-//        if(loose){
-//    System.out.println("Game Over! The number was " + targetNumber);
-//}else{
-//    System.out.println("congrats your won");
-//
-//}
+        attempt++;
+        hint++;
     }
+
+
+//        System.out.println("  attempt " +   attempt++);
+//        System.out.println("  hint " +   hint);
+    System.out.println("target Number " + targetNumber);
+
+    if (targetNumber == result) {
+        System.out.println("congrats your won");
+    }
+
+    }catch (Exception e){
+    throw new InvalidInputException("please enter Number only");
+    }
+
+}
 }
