@@ -13,8 +13,8 @@ public class GameConfig {
         return MAX_ATTEMPT;
     }
 
-    public int getMAX_GUESS() {
-        return MAX_GUESS;
+    public int getMAX_HINT() {
+        return MAX_HINT;
     }
 
     public int getTargetNumber() {
@@ -35,7 +35,7 @@ public class GameConfig {
     private final int MIN = 1;
     private final int MAX = 100;
     private final int MAX_ATTEMPT = 7;
-    private final int MAX_GUESS = 3;
+    private final int MAX_HINT = 3;
     int targetNumber;
 
     public String getName() {
@@ -48,3 +48,5 @@ public class GameConfig {
 
     private String name;
 }
+
+
