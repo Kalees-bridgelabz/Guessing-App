@@ -1,9 +1,6 @@
 package org.example;
 
-import org.example.guessingapp.GameConfig;
-import org.example.guessingapp.HintService;
-import org.example.guessingapp.InvalidInputException;
-import org.example.guessingapp.ValidationService;
+import org.example.guessingapp.*;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -51,7 +48,7 @@ try {
     int hint = 1;
 
     while (targetNumber != result
-            && attempt <= gc.getMAX_ATTEMPT()) {
+            && attempt < gc.getMAX_ATTEMPT()) {
 //                if (targetNumber > result) {
 //                    System.out.println("you guess low");
 //                    attempt++;
@@ -78,11 +75,20 @@ try {
 //        System.out.println("  hint " +   hint);
     System.out.println("target Number " + targetNumber);
 
+
+    boolean finalResult = false;
+
     if (targetNumber == result) {
         System.out.println("congrats your won");
+        finalResult = true;
+    }else{
+        finalResult = false;
     }
 
-    }catch (Exception e){
+    StorageServices.saveResult(name,attempt,finalResult);
+
+
+}catch (Exception e){
     throw new InvalidInputException("please enter Number only");
     }
 
