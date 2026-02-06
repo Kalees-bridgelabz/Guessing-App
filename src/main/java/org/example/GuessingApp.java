@@ -1,9 +1,12 @@
 package org.example;
 
 import org.example.guessingapp.GameConfig;
+import org.example.guessingapp.HintService;
 
 import java.util.Random;
 import java.util.Scanner;
+
+
 /*
 * this branch have game configuration and game rules
 * */
@@ -38,30 +41,42 @@ public class GuessingApp {
         int result = sc.nextInt();
 
         int attempt = 0;
-        boolean loose = false;
+       // boolean loose = false;
+
+        int hint = 1;
 
             while (targetNumber != result
             && attempt <= gc.getMAX_ATTEMPT()) {
-                if (targetNumber > result) {
-                    System.out.println("you guess low");
-                    attempt++;
-                    loose = true;
-                } else if (targetNumber < result) {
-                    System.out.println("you guess high");
-                    attempt++;
-                    loose = true;
+//                if (targetNumber > result) {
+//                    System.out.println("you guess low");
+//                    attempt++;
+//                    loose = true;
+//                } else if (targetNumber < result) {
+//                    System.out.println("you guess high");
+//                    attempt++;
+//                    loose = true;
+//                }
+                if(hint<=gc.getMAX_HINT()) {
+                  String message =   HintService.getHintCount(targetNumber, hint);
+                    System.out.println("message " + message);
                 }
                 result = sc.nextInt();
                 attempt++;
+                hint ++;
             }
 
 
         System.out.println("  attempt " +   attempt++);
-if(loose){
-    System.out.println("Game Over! The number was " + targetNumber);
-}else{
+        System.out.println("  hint " +   hint);
+        System.out.println("target Number " + targetNumber);
+if(targetNumber==result){
     System.out.println("congrats your won");
-
 }
+//        if(loose){
+//    System.out.println("Game Over! The number was " + targetNumber);
+//}else{
+//    System.out.println("congrats your won");
+//
+//}
     }
 }
